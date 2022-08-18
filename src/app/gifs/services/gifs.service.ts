@@ -14,7 +14,14 @@ export class GifsService {
   }
 
   buscarGifs(query: string) {
-    this._historial.unshift(query);
-    console.warn(this._historial)
+    query = query.trim().toLowerCase();
+    //Verifica que no se esten duplicados
+    if(!this._historial.includes(query)){
+      this._historial.unshift(query);
+      //Hace que solo muestre 10 resultados
+      this._historial = this._historial.splice(0,10);
+    }
+    
+    console.warn(this._historial);
   }
 }
