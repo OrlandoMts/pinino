@@ -1,11 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Gif, SearchGIFResponse } from '../interface/gif.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GifsService {
 
-  constructor() { }
+  private APIKEY: string = 'aXIA8RkhHFOzbUQh0J5zljtHBpFdPjbK'; 
+  public resultados: Gif[] = [];
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   private _historial: string[] = [];
 
@@ -21,7 +28,12 @@ export class GifsService {
       //Hace que solo muestre 10 resultados
       this._historial = this._historial.splice(0,10);
     }
-    
-    console.warn(this._historial);
+
+    this.http.get<SearchGIFResponse>(`https://api.giphy.com/v1/gifs/search?api_key=${this.APIKEY}&q=${query}&limit=5`)
+        .subscribe( (res) => {
+          this.resultados = res.data;
+          console.log(res.data);
+        })
+  
   }
 }
