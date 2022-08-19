@@ -4,6 +4,8 @@
     <div class="list-group list-reset">
         <a href="#"
             class="list-group-item list-group-item-action"
-        >Dashboard</a>
+            *ngFor="let busqueda of busquedasRecientes"
+            (click) = "buscar(busqueda)"
+        >{{busqueda | titlecase}}</a>
     </div>
 </div>
